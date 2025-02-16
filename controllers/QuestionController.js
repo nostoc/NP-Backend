@@ -52,5 +52,23 @@ const deleteQuestion = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 };
+const updateQuestion = async (req, res) => {
+    try {
+        const { questionId } = req.params;
+        if (!mongoose.Types.ObjectId.isValid(questionId)) {
+            return res.status(400).json({ error: "Invalid question ID format" });
+        }
+        const updatedQuestion = req.body;
+        const question = await Question.findByIdAndUpdate(questionId, updatedQuestion, { new: true });
+        if (!question) {
+            return res.status(404).json({ message: "Question not found" });
+        }
+        res.status(200).json({ message: "Question updated", question });  
 
-module.exports = { addQuestion, getAllQuestions, deleteQuestion };
+    }
+    catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+module.exports = { addQuestion, getAllQuestions, deleteQuestion, updateQuestion };
