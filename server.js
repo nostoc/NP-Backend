@@ -105,7 +105,7 @@ io.on("connection", (socket) => {
 
             room.questionTimer = setTimeout(() => {
                 handleQuestionTimeout(roomId, io);
-            }, 30000);
+            }, 15000);
 
             io.to(roomId).emit("question", {
                 question: {
@@ -113,7 +113,7 @@ io.on("connection", (socket) => {
                     options: questions[0].options,
                     questionNumber: 1,
                     totalQuestions: questions.length,
-                    timeLimit: 30
+                    timeLimit: 15
                 }
             });
         }
@@ -221,7 +221,7 @@ function moveToNextQuestion(roomId, io) {
 
         room.questionTimer = setTimeout(() => {
             handleQuestionTimeout(roomId, io);
-        }, 30000);
+        }, 15000);
 
         const currentQuestion = room.questions[room.currentQuestionIndex];
         io.to(roomId).emit("question", {
